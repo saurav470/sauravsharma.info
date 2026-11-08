@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "sonar": "vitest run --coverage && sonar-scanner -Dsonar.token=$sonarcube_key"
+    "sonar": "vitest run --coverage && npx --yes sonarqube-scanner -Dsonar.token=$sonarcube_key"
   },
   "dependencies": {
     "lucide-react": "^1.70.0",
