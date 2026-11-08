@@ -157,3 +157,9 @@ details > summary::-webkit-details-marker { display: none }
   content-visibility: auto;
   contain-intrinsic-size: auto 1100px;
 }
+
+/* Rotating hero word: full size unless it truly can't fit the headline width (container query units). */
+.fit-word { font-size: min(1em, calc(100cqi / var(--fit-s))); }
+@media (min-width: 40rem) {
+  .fit-word { font-size: min(1em, calc(100cqi / var(--fit-l))); }
+}

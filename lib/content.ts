@@ -31,17 +31,21 @@ export interface RoleWord {
   bg: string;
   fg: string;
   rotate: number;
-  /** Width of tile + label in em (measured in Geist 600). Used to shrink long words on narrow phones. */
+  /** Shorter label for phones (< 640px); defaults to `label`. */
+  short?: string;
+  /** Width of tile + label in em (Geist 600). Safety net: shrinks the word only if it can't fit. */
   fit: number;
+  /** Same, for `short`. */
+  fitShort?: number;
 }
 
-// Keep these SHORT (≤ ~6.5em incl. tile) so they fit a 360px phone at full size, like vidyst's hero.
+// Desktop/tablet show the full `label`; phones show `short` so it fits at full size (like vidyst's hero).
 export const ROLE_WORDS: RoleWord[] = [
-  { label: "backends", icon: "apachekafka", bg: "#111111", fg: "#fff", rotate: -6, fit: 5.7 },
+  { label: "distributed systems", short: "systems", icon: "apachekafka", bg: "#111111", fg: "#fff", rotate: -6, fit: 10.1, fitShort: 5.1 },
   { label: "AI agents", icon: "langchain", bg: "#8B7BFF", fg: "#fff", rotate: 5, fit: 5.5 },
-  { label: "Go services", icon: "go", bg: "#00ADD8", fg: "#fff", rotate: -4, fit: 6.5 },
-  { label: "web apps", icon: "nextdotjs", bg: "#F5C542", fg: "#111", rotate: 6, fit: 5.6 },
-  { label: "APIs", icon: "fastapi", bg: "#63d94e", fg: "#111", rotate: -5, fit: 3.4 },
+  { label: "real-time apps", short: "real-time UIs", icon: "socketdotio", bg: "#63d94e", fg: "#111", rotate: -4, fit: 7.8, fitShort: 7 },
+  { label: "Go services", icon: "go", bg: "#00ADD8", fg: "#fff", rotate: 6, fit: 6.5 },
+  { label: "Next.js frontends", short: "frontends", icon: "nextdotjs", bg: "#F5C542", fg: "#111", rotate: -5, fit: 9, fitShort: 5.7 },
 ];
 
 export interface Job {
