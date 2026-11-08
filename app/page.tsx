@@ -27,7 +27,7 @@ interface Feature {
   body: string;
 }
 
-function FeatureRow({ items }: { items: Feature[] }) {
+function FeatureRow({ items }: Readonly<{ items: Feature[] }>) {
   return (
     <div className="mt-12 grid grid-cols-[repeat(auto-fit,minmax(min(100%,230px),1fr))] gap-8 text-left">
       {items.map((f) => (

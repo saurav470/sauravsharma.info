@@ -29,6 +29,32 @@ const STEP_MS = 850;
 const CHARS_PER_MS = 0.05;
 const HOLD_MS = 3600;
 
+type StepStateName = "done" | "running" | "pending";
+
+export function stepState(i: number, doneCount: number, answering: boolean): StepStateName {
+  if (i < doneCount) return "done";
+  if (i === doneCount && !answering) return "running";
+  return "pending";
+}
+
+function StepStatus({ state, ms }: Readonly<{ state: StepStateName; ms: number }>) {
+  if (state === "done")
+    return (
+      <span className="inline-flex items-center gap-1 text-[#63d94e]">
+        <Check size={12} strokeWidth={3} />
+        {ms}ms
+      </span>
+    );
+  if (state === "running")
+    return (
+      <span
+        className="ml-auto block size-3.5 rounded-full border-2 border-[#ffffff30] border-t-[#F5C542]"
+        style={{ animation: "ssSpin .8s linear infinite" }}
+      />
+    );
+  return <span className="text-[#5a5a60]">—</span>;
+}
+
 type Phase = { kind: "steps"; step: number } | { kind: "typing" } | { kind: "hold" };
 
 export function AgentTrace() {
@@ -89,7 +115,7 @@ export function AgentTrace() {
           <div className="flex items-center gap-2 text-[13px] text-subtle">
             <span className="flex size-6 items-center justify-center rounded-full bg-[#e8cfae] text-[11px] font-semibold text-ink">
               Dr
-            </span>
+            </span>{" "}
             Dr. Mehra · consultation #4821
           </div>
           <div className="ml-auto max-w-[85%] rounded-[18px] rounded-br-md bg-ink px-4 py-3 text-[14.5px] leading-[1.5] text-white">
@@ -140,7 +166,7 @@ export function AgentTrace() {
           </div>
           <ol className="relative mt-5 flex flex-col gap-1">
             {STEPS.map((s, i) => {
-              const state = i < doneCount ? "done" : i === doneCount && !answering ? "running" : "pending";
+              const state = stepState(i, doneCount, answering);
               const Icon = s.icon;
               return (
                 <li
@@ -159,19 +185,7 @@ export function AgentTrace() {
                     <span className="block truncate text-[12px] text-[#8e8e93]">{s.detail}</span>
                   </span>
                   <span className="w-[54px] shrink-0 text-right font-mono text-[11px]">
-                    {state === "done" ? (
-                      <span className="inline-flex items-center gap-1 text-[#63d94e]">
-                        <Check size={12} strokeWidth={3} />
-                        {s.ms}ms
-                      </span>
-                    ) : state === "running" ? (
-                      <span
-                        className="ml-auto block size-3.5 rounded-full border-2 border-[#ffffff30] border-t-[#F5C542]"
-                        style={{ animation: "ssSpin .8s linear infinite" }}
-                      />
-                    ) : (
-                      <span className="text-[#5a5a60]">—</span>
-                    )}
+                    <StepStatus state={state} ms={s.ms} />
                   </span>
                 </li>
               );

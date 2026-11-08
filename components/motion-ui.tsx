@@ -14,7 +14,7 @@ import type { RoleWord } from "@/lib/content";
 import { BrandIcon } from "./ui";
 
 /** Fade/rise children in the first time they scroll into view. */
-export function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function Reveal({ children, className = "" }: Readonly<{ children: ReactNode; className?: string }>) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -39,7 +39,7 @@ export function Reveal({ children, className = "" }: { children: ReactNode; clas
 }
 
 /** Pauses CSS keyframe loops inside while the block is off-screen. */
-export function OffscreenGate({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function OffscreenGate({ children, className = "" }: Readonly<{ children: ReactNode; className?: string }>) {
   const ref = useRef<HTMLDivElement>(null);
   useOffscreenAttr(ref);
   return (
@@ -50,7 +50,7 @@ export function OffscreenGate({ children, className = "" }: { children: ReactNod
 }
 
 /** Global "Pause animations" chip — hidden for reduced-motion users. */
-export function MotionToggle({ className = "" }: { className?: string }) {
+export function MotionToggle({ className = "" }: Readonly<{ className?: string }>) {
   const paused = usePaused();
   const reduced = useReducedMotion();
   if (reduced) return null;
@@ -66,8 +66,22 @@ export function MotionToggle({ className = "" }: { className?: string }) {
   );
 }
 
+type WordState = "active" | "prev" | "next";
+
+const WORD_TRANSFORM: Record<WordState, string> = {
+  active: "translateY(0) scale(1)",
+  prev: "translateY(-0.6em) scale(.92)",
+  next: "translateY(0.6em) scale(.92)",
+};
+
+export function wordState(i: number, index: number, count: number): WordState {
+  const offset = (i - index + count) % count;
+  if (offset === 0) return "active";
+  return offset === count - 1 ? "prev" : "next";
+}
+
 /** Hero word that rises in from below with a blur-spring, every ~2.2s. */
-export function RotatingWord({ items, interval = 2200 }: { items: RoleWord[]; interval?: number }) {
+export function RotatingWord({ items, interval = 2200 }: Readonly<{ items: RoleWord[]; interval?: number }>) {
   const ref = useRef<HTMLSpanElement>(null);
   const [index, setIndex] = useState(0);
   const active = useAnimate(ref);
@@ -77,14 +91,8 @@ export function RotatingWord({ items, interval = 2200 }: { items: RoleWord[]; in
     <span ref={ref} className="relative inline-grid justify-items-center overflow-hidden pb-[0.08em] align-bottom">
       <span className="sr-only">{items.map((w) => w.label).join(", ")}</span>
       {items.map((w, i) => {
-        const offset = (i - index + items.length) % items.length;
-        const state = offset === 0 ? "active" : offset === items.length - 1 ? "prev" : "next";
-        const transform =
-          state === "active"
-            ? "translateY(0) scale(1)"
-            : state === "prev"
-              ? "translateY(-0.6em) scale(.92)"
-              : "translateY(0.6em) scale(.92)";
+        const state = wordState(i, index, items.length);
+        const transform = WORD_TRANSFORM[state];
         return (
           <span
             key={w.label}
@@ -113,7 +121,7 @@ export function RotatingWord({ items, interval = 2200 }: { items: RoleWord[]; in
 }
 
 /** Ticking mono clock "00:42:33" — starts at a fixed offset so SSR and client agree. */
-export function LiveClock({ start = 2553, className = "" }: { start?: number; className?: string }) {
+export function LiveClock({ start = 2553, className = "" }: Readonly<{ start?: number; className?: string }>) {
   const ref = useRef<HTMLSpanElement>(null);
   const [secs, setSecs] = useState(start);
   const active = useAnimate(ref);

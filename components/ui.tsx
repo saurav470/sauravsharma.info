@@ -14,15 +14,15 @@ export function Container({
   size = "default",
   className = "",
   children,
-}: {
+}: Readonly<{
   size?: ContainerSize;
   className?: string;
   children: ReactNode;
-}) {
+}>) {
   return <div className={`mx-auto w-full px-6 ${CONTAINER[size]} ${className}`}>{children}</div>;
 }
 
-export function Section({ id, className = "", children }: { id?: string; className?: string; children: ReactNode }) {
+export function Section({ id, className = "", children }: Readonly<{ id?: string; className?: string; children: ReactNode }>) {
   return (
     <section id={id} className={`cv-auto pt-[120px] sm:pt-[168px] ${className}`}>
       {children}
@@ -32,7 +32,7 @@ export function Section({ id, className = "", children }: { id?: string; classNa
 
 /* ───────────── Type ───────────── */
 
-export function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function Eyebrow({ children, className = "" }: Readonly<{ children: ReactNode; className?: string }>) {
   return <p className={`text-[15px] text-subtle ${className}`}>{children}</p>;
 }
 
@@ -43,13 +43,13 @@ export function Display({
   as: Tag = "h2",
   size = "display",
   className = "",
-}: {
+}: Readonly<{
   first: ReactNode;
   second?: ReactNode;
   as?: "h1" | "h2";
   size?: "display" | "cta" | "split";
   className?: string;
-}) {
+}>) {
   const sizes = {
     display: "text-[clamp(36px,4.8vw,64px)] leading-[1.12] tracking-[-0.035em]",
     split: "text-[clamp(34px,4.2vw,56px)] leading-[1.14] tracking-[-0.035em]",
@@ -68,7 +68,7 @@ export function Display({
   );
 }
 
-export function Lead({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function Lead({ children, className = "" }: Readonly<{ children: ReactNode; className?: string }>) {
   return <p className={`text-[18px] leading-[1.55] text-muted text-pretty ${className}`}>{children}</p>;
 }
 
@@ -79,12 +79,12 @@ export function BrandIcon({
   size = 18,
   color,
   className = "",
-}: {
+}: Readonly<{
   slug: string;
   size?: number;
   color?: string;
   className?: string;
-}) {
+}>) {
   const brand = BRAND_META[slug];
   if (!brand) return null;
   return (
@@ -110,14 +110,14 @@ export function BrandSquare({
   bg,
   fg = "#fff",
   className = "",
-}: {
+}: Readonly<{
   slug: string;
   size?: number;
   radius?: number;
   bg?: string;
   fg?: string;
   className?: string;
-}) {
+}>) {
   const brand = BRAND_META[slug];
   return (
     <span
@@ -134,11 +134,11 @@ export function InlineTile({
   bg,
   rotate = -6,
   children,
-}: {
+}: Readonly<{
   bg: string;
   rotate?: number;
   children: ReactNode;
-}) {
+}>) {
   return (
     <span
       aria-hidden="true"
@@ -175,7 +175,7 @@ export function ButtonLink({
   className = "",
   external,
   download,
-}: {
+}: Readonly<{
   href: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
@@ -184,7 +184,7 @@ export function ButtonLink({
   className?: string;
   external?: boolean;
   download?: boolean;
-}) {
+}>) {
   return (
     <a
       href={href}
@@ -198,7 +198,7 @@ export function ButtonLink({
   );
 }
 
-export function Chip({ children, icon }: { children: ReactNode; icon?: ReactNode }) {
+export function Chip({ children, icon }: Readonly<{ children: ReactNode; icon?: ReactNode }>) {
   return (
     <span className="inline-flex h-10 items-center gap-2 rounded-full bg-surface-2 px-4 text-[14px] font-medium text-ink">
       {icon}
@@ -207,7 +207,7 @@ export function Chip({ children, icon }: { children: ReactNode; icon?: ReactNode
   );
 }
 
-export function Tag({ children }: { children: ReactNode }) {
+export function Tag({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <span className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-[12px] font-medium text-ink-2 shadow-[inset_0_0_0_1px_#e6e6e6]">
       {children}
@@ -215,7 +215,7 @@ export function Tag({ children }: { children: ReactNode }) {
   );
 }
 
-export function PulseDot({ color = "#63d94e", size = 7 }: { color?: string; size?: number }) {
+export function PulseDot({ color = "#63d94e", size = 7 }: Readonly<{ color?: string; size?: number }>) {
   return (
     <span
       aria-hidden="true"
@@ -235,6 +235,6 @@ export function PulseDot({ color = "#63d94e", size = 7 }: { color?: string; size
 }
 
 /** Grey rounded "stage" panel that holds every graphic. */
-export function Stage({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function Stage({ children, className = "" }: Readonly<{ children: ReactNode; className?: string }>) {
   return <div className={`rounded-[28px] bg-surface-2 ${className}`}>{children}</div>;
 }

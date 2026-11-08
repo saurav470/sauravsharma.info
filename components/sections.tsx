@@ -1,9 +1,8 @@
 import { ArrowUpRight, FileText, Mail, Plus } from "lucide-react";
 import { EXPERIENCE, FAQS, PROJECTS, SITE, STACK_ROWS } from "@/lib/content";
 import { BrandIcon, ButtonLink, Tag } from "./ui";
-import { OffscreenGate } from "./motion-ui";
 import { HubDiagram } from "./diagrams/hub-diagram";
-import { LiveClock } from "./motion-ui";
+import { LiveClock, OffscreenGate } from "./motion-ui";
 import { Logo } from "./site-header";
 
 /* ───────────── Stack marquee ───────────── */
@@ -13,7 +12,7 @@ export function StackMarquee() {
     <OffscreenGate className="mask-x flex flex-col gap-3 overflow-hidden">
       {STACK_ROWS.map((row, r) => (
         <ul
-          key={r}
+          key={row[0].slug}
           className={`marquee flex w-max gap-3 ${r % 2 ? "marquee-reverse" : ""}`}
           style={{ ["--marquee-duration" as string]: `${54 + r * 9}s` }}
         >

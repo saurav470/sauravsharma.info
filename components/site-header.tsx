@@ -5,7 +5,7 @@ import { Download, Menu, X } from "lucide-react";
 import { NAV, SITE } from "@/lib/content";
 import { MotionToggle } from "./motion-ui";
 
-export function Logo({ size = 24 }: { size?: number }) {
+export function Logo({ size = 24 }: Readonly<{ size?: number }>) {
   return (
     <svg viewBox="0 0 64 64" width={size} height={size} aria-hidden="true" className="shrink-0">
       <rect width="64" height="64" rx="16" fill="#111" />

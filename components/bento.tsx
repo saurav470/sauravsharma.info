@@ -7,11 +7,11 @@ function Cell({
   className = "",
   dark = false,
   children,
-}: {
+}: Readonly<{
   className?: string;
   dark?: boolean;
   children: ReactNode;
-}) {
+}>) {
   return (
     <article
       className={`relative flex flex-col overflow-hidden rounded-[28px] p-8 ${dark ? "bg-ink text-white" : "bg-surface-2"} ${className}`}
@@ -21,7 +21,7 @@ function Cell({
   );
 }
 
-function Big({ children, dark }: { children: ReactNode; dark?: boolean }) {
+function Big({ children, dark }: Readonly<{ children: ReactNode; dark?: boolean }>) {
   return (
     <div
       className={`text-[clamp(56px,7vw,96px)] leading-[.95] font-semibold tracking-[-0.05em] tabular-nums ${dark ? "text-white" : "text-ink"}`}
@@ -31,7 +31,7 @@ function Big({ children, dark }: { children: ReactNode; dark?: boolean }) {
   );
 }
 
-function Title({ children, dark }: { children: ReactNode; dark?: boolean }) {
+function Title({ children, dark }: Readonly<{ children: ReactNode; dark?: boolean }>) {
   return (
     <h3 className={`text-[22px] leading-[1.2] font-semibold tracking-[-0.02em] ${dark ? "text-white" : "text-ink"}`}>
       {children}
@@ -39,7 +39,7 @@ function Title({ children, dark }: { children: ReactNode; dark?: boolean }) {
   );
 }
 
-function Body({ children, dark }: { children: ReactNode; dark?: boolean }) {
+function Body({ children, dark }: Readonly<{ children: ReactNode; dark?: boolean }>) {
   return <p className={`mt-2 text-[15px] leading-[1.5] ${dark ? "text-[#a8a8a8]" : "text-muted"}`}>{children}</p>;
 }
 
@@ -101,7 +101,7 @@ export function Bento() {
               <PulseDot color="#f4525f" /> Live
             </span>
             <span className="inline-flex h-10 items-center gap-2 rounded-full bg-white px-4 text-[14px] font-medium text-ink">
-              <span className="size-[7px] rounded-full bg-[#f79c34]" style={{ animation: "ssBlink 1.1s infinite" }} />
+              <span className="size-[7px] rounded-full bg-[#f79c34]" style={{ animation: "ssBlink 1.1s infinite" }} />{" "}
               Rolling update
             </span>
             <span className="inline-flex h-10 items-center gap-2 rounded-full bg-white px-4 text-[14px] font-medium text-ink">
@@ -157,7 +157,7 @@ export function Bento() {
       {/* 5 — gRPC (dark) */}
       <Cell dark className="min-h-[250px]">
         <span className="inline-flex h-7 w-fit items-center gap-2 rounded-full bg-white/10 px-3 font-mono text-[11px] tracking-[.06em] text-white">
-          <span className="size-1.5 rounded-full bg-live" style={{ animation: "ssBlink 1.6s infinite" }} />
+          <span className="size-1.5 rounded-full bg-live" style={{ animation: "ssBlink 1.6s infinite" }} />{" "}
           REST → gRPC
         </span>
         <div className="mt-4">

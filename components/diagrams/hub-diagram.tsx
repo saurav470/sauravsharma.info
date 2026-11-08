@@ -22,7 +22,7 @@ interface PathGeo {
   side: "l" | "r";
 }
 
-interface Particle {
+export interface Particle {
   el: SVGCircleElement;
   path: number;
   t: number;
@@ -33,6 +33,39 @@ interface Particle {
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 const MAX_PARTICLES = 16;
+
+/** Small deterministic PRNG (mulberry32). Visual jitter only — never used for anything secret. */
+export function createRng(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Fade in over the first 10% of the trip and out over the last 10%. */
+export function edgeFade(t: number): number {
+  if (t < 0.1) return t / 0.1;
+  if (t > 0.9) return (1 - t) / 0.1;
+  return 1;
+}
+
+/** Moves one particle along its path; returns the advanced particle, or null when it has arrived. */
+export function advanceParticle(prev: Particle, dt: number, path: SVGPathElement | null): Particle | null {
+  const p = { ...prev, t: prev.t + dt / prev.dur };
+  if (p.t >= 1 || !path) {
+    p.el.remove();
+    return null;
+  }
+  const pt = path.getPointAtLength(path.getTotalLength() * (p.reverse ? 1 - p.t : p.t));
+  p.el.setAttribute("cx", pt.x.toFixed(1));
+  p.el.setAttribute("cy", pt.y.toFixed(1));
+  p.el.setAttribute("opacity", edgeFade(p.t).toFixed(2));
+  return p;
+}
 
 /**
  * Hub-and-spoke diagram: a dark hub with pulse rings, white node cards on both sides joined by
@@ -46,14 +79,14 @@ export function HubDiagram({
   hubBadge,
   mode = "out",
   className = "",
-}: {
+}: Readonly<{
   left: HubNode[];
   right: HubNode[];
   hub: ReactNode;
   hubBadge?: ReactNode;
   mode?: "out" | "through";
   className?: string;
-}) {
+}>) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const hubRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLElement | null)[]>([]);
@@ -61,6 +94,7 @@ export function HubDiagram({
   const layerRef = useRef<SVGGElement>(null);
   const particles = useRef<Particle[]>([]);
   const spawnIn = useRef(0);
+  const rng = useRef(createRng(0x5a17));
   const [geo, setGeo] = useState<{ w: number; h: number; paths: PathGeo[] }>({ w: 1000, h: 360, paths: [] });
 
   const nodes = [...left, ...right];
@@ -105,13 +139,14 @@ export function HubDiagram({
         .map((p, i) => ({ p, i }))
         .filter(({ p }) => side === "any" || p.side === side);
       if (!candidates.length) return;
-      const pick = candidates[Math.floor(Math.random() * candidates.length)];
+      const rand = rng.current;
+      const pick = candidates[Math.floor(rand() * candidates.length)];
       const el = document.createElementNS(SVG_NS, "circle");
-      el.setAttribute("r", (2.5 + Math.random() * 1.7).toFixed(2));
+      el.setAttribute("r", (2.5 + rand() * 1.7).toFixed(2));
       el.setAttribute("fill", colorFrom ?? pick.p.color);
       el.setAttribute("opacity", "0");
       layer.appendChild(el);
-      particles.current.push({ el, path: pick.i, t: 0, dur: 1150 + Math.random() * 300, reverse, side: pick.p.side });
+      particles.current.push({ el, path: pick.i, t: 0, dur: 1150 + rand() * 300, reverse, side: pick.p.side });
     },
     [geo.paths],
   );
@@ -119,26 +154,15 @@ export function HubDiagram({
   useRaf((dt) => {
     spawnIn.current -= dt;
     if (spawnIn.current <= 0) {
-      spawnIn.current = 140 + Math.random() * 130;
+      spawnIn.current = 140 + rng.current() * 130;
       if (mode === "out") spawn("any", false);
       else spawn("l", true);
     }
     const alive: Particle[] = [];
     for (const prev of particles.current) {
-      const p = { ...prev, t: prev.t + dt / prev.dur };
-      const path = pathRefs.current[p.path];
-      if (p.t >= 1 || !path) {
-        p.el.remove();
-        if (mode === "through" && p.side === "l") spawn("r", false);
-        continue;
-      }
-      const len = path.getTotalLength();
-      const pt = path.getPointAtLength(len * (p.reverse ? 1 - p.t : p.t));
-      p.el.setAttribute("cx", pt.x.toFixed(1));
-      p.el.setAttribute("cy", pt.y.toFixed(1));
-      const fade = p.t < 0.1 ? p.t / 0.1 : p.t > 0.9 ? (1 - p.t) / 0.1 : 1;
-      p.el.setAttribute("opacity", fade.toFixed(2));
-      alive.push(p);
+      const next = advanceParticle(prev, dt, pathRefs.current[prev.path]);
+      if (next) alive.push(next);
+      else if (mode === "through" && prev.side === "l") spawn("r", false);
     }
     particles.current = alive;
   }, active && geo.paths.length > 0);
@@ -203,7 +227,7 @@ export function HubDiagram({
       >
         {geo.paths.map((p, i) => (
           <path
-            key={i}
+            key={nodes[i]?.title ?? p.d}
             ref={(el) => {
               pathRefs.current[i] = el;
             }}

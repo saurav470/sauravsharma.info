@@ -1,0 +1,6 @@
+projectKey=sauravsharma-info
+serverUrl=https://sonarqube.sauravsharma.online
+serverVersion=26.8.0.126808
+dashboardUrl=https://sonarqube.sauravsharma.online/dashboard?id=sauravsharma-info
+ceTaskId=cd42b293-2b41-4e0c-9a37-6a6626958100
+ceTaskUrl=https://sonarqube.sauravsharma.online/api/ce/task?id=cd42b293-2b41-4e0c-9a37-6a6626958100

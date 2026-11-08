@@ -40,7 +40,7 @@ const SCRIPT: Script[] = [
   { src: 3, name: "report.daily", status: "ok", ms: 42 },
 ];
 
-interface Row {
+export interface Row {
   key: number;
   id: string;
   src: number;
@@ -55,7 +55,7 @@ const CYCLE_MS = 1900;
 const DOT_MS = 800;
 const MAX_ROWS = 6;
 
-function makeRow(n: number, prev: Row | undefined): Row {
+export function makeRow(n: number, prev: Row | undefined): Row {
   const s = SCRIPT[n % SCRIPT.length];
   const id = s.status === "dup" && prev ? prev.id : `evt_${(0x7f3a + n * 37).toString(16)}`;
   return {
@@ -70,13 +70,13 @@ function makeRow(n: number, prev: Row | undefined): Row {
   };
 }
 
-function initialRows(): Row[] {
+export function initialRows(): Row[] {
   const rows: Row[] = [];
-  for (let n = 0; n < 4; n++) rows.push(makeRow(n, rows[rows.length - 1]));
+  for (let n = 0; n < 4; n++) rows.push(makeRow(n, rows.at(-1)));
   return rows;
 }
 
-function StatusBadge({ status, ms }: { status: Status; ms: number }) {
+function StatusBadge({ status, ms }: Readonly<{ status: Status; ms: number }>) {
   if (status === "dup")
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-[#fff4d6] px-2 py-[3px] text-[11.5px] font-medium leading-none text-[#6b4a00]">
@@ -158,7 +158,7 @@ export function PipelineFlow() {
       L.dot = null;
       const n = L.n++;
       setPop(-1);
-      setRows((prev) => [...prev, makeRow(n, prev[prev.length - 1])].slice(-MAX_ROWS));
+      setRows((prev) => [...prev, makeRow(n, prev.at(-1))].slice(-MAX_ROWS));
       const status = SCRIPT[n % SCRIPT.length].status;
       setStats((s) => ({ ...s, [status]: s[status] + 1 }));
       return;
@@ -184,7 +184,7 @@ export function PipelineFlow() {
         viewBox={`0 0 ${geo.w} ${geo.h}`}
       >
         {geo.paths.map((d, i) => (
-          <g key={i}>
+          <g key={SOURCES[i].name}>
             <path d={d} fill="none" stroke="#dcdcdc" strokeWidth="1.5" />
             <path
               ref={(el) => {
@@ -240,7 +240,7 @@ export function PipelineFlow() {
             <div className="truncate font-mono text-[11px] text-subtle">consumer group · 6 partitions</div>
           </div>
           <span className="ml-auto flex items-center gap-1.5 text-[11.5px] font-medium text-ink">
-            <span className="size-1.5 rounded-full bg-ok" style={{ animation: "ssBlink 2.4s infinite" }} />
+            <span className="size-1.5 rounded-full bg-ok" style={{ animation: "ssBlink 2.4s infinite" }} />{" "}
             lag 0
           </span>
         </div>
