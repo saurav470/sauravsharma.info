@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# sauravsharma.info
 
-## Getting Started
+Personal portfolio of Saurav Sharma — Next.js 16 (App Router) static export + Tailwind v4, Geist type, hand-built animated SVG diagrams (no animation library). Design language modelled on vidyst.com.
 
-First, run the development server:
+## Develop
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev            # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Everything written on the site lives in `lib/content.ts` (keep in sync with the résumé). The résumé PDF is `public/Saurav_Sharma_Resume.pdf`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy
 
-## Learn More
+```bash
+./deploy.sh         # lint → build → rsync out/ to vm_oracle:/var/www/sauravsharma.info → health check
+```
 
-To learn more about Next.js, take a look at the following resources:
+Hosting: Oracle Cloud ARM VM, nginx vhost `/etc/nginx/sites-available/sauravsharma.info` (HTTPS via certbot, www/http → https://sauravsharma.info, immutable caching for `/_next/static`, CSP + security headers).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Motion
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `lib/motion.ts` — global pause store (localStorage), reduced-motion, in-view gating, rAF/interval hooks.
+- CSS keyframes in `app/globals.css` pause via `html[data-motion=paused]` and `[data-offscreen]`.
+- `prefers-reduced-motion` disables loops, reveals and hides the pause control.
