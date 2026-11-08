@@ -237,7 +237,7 @@ export function SiteFooter() {
     },
   ];
   return (
-    <footer className="pt-[120px] pb-10">
+    <footer className="overflow-x-clip pt-[120px] pb-10">
       <div className="mx-auto max-w-[1240px] px-6">
         <div className="grid grid-cols-2 gap-x-8 gap-y-12 border-b border-line-soft pb-14 lg:grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))]">
           <div className="col-span-2 lg:col-span-1">
@@ -293,7 +293,7 @@ export function SiteFooter() {
         </div>
         <div
           aria-hidden="true"
-          className="mt-10 bg-[linear-gradient(180deg,var(--color-wordmark),var(--color-page))] bg-clip-text text-center text-[clamp(48px,12.2vw,176px)] leading-[.8] font-bold tracking-[-0.06em] whitespace-nowrap text-transparent select-none"
+          className="mt-10 bg-[linear-gradient(180deg,var(--color-wordmark),var(--color-page))] bg-clip-text text-center text-[clamp(34px,12.2vw,176px)] leading-[.8] font-bold tracking-[-0.06em] whitespace-nowrap text-transparent select-none"
         >
           saurav sharma
         </div>

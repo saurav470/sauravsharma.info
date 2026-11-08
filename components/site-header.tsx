@@ -44,7 +44,7 @@ export function SiteHeader() {
       >
         Skip to content
       </a>
-      <nav className="mx-auto flex h-15 max-w-[1240px] items-center gap-6 px-6" aria-label="Main">
+      <nav className="mx-auto flex h-15 max-w-[1240px] items-center gap-4 px-6 sm:gap-6" aria-label="Main">
         <a href="#top" className="flex items-center gap-[9px] text-[18px] font-semibold tracking-[-0.4px] whitespace-nowrap text-ink">
           <Logo />
           {SITE.name}
@@ -62,23 +62,17 @@ export function SiteHeader() {
           <div className="hidden xl:block">
             <MotionToggle />
           </div>
-          <ThemeToggle />
+          <ThemeToggle className="max-sm:hidden" />
           <a
             href={SITE.resume}
             download=""
-            className={`inline-flex h-9 items-center gap-2 rounded-full px-4 text-[14px] font-medium whitespace-nowrap transition-colors duration-300 ${
+            aria-label="Download résumé"
+            className={`inline-flex h-9 items-center justify-center gap-2 rounded-full text-[14px] font-medium whitespace-nowrap transition-colors duration-300 max-sm:w-9 sm:px-4 ${
               solid ? "bg-ink text-white hover:bg-ink-2" : "bg-chip text-ink hover:bg-line-soft"
             }`}
           >
-            {solid ? <Download size={15} /> : null}
-            {solid ? (
-              <>
-                <span className="max-sm:hidden">Download résumé</span>
-                <span className="sm:hidden">Résumé</span>
-              </>
-            ) : (
-              "Résumé"
-            )}
+            <Download size={15} className={solid ? "" : "sm:hidden"} />
+            <span className="max-sm:hidden">{solid ? "Download résumé" : "Résumé"}</span>
           </a>
           <button
             type="button"
@@ -103,8 +97,9 @@ export function SiteHeader() {
               {l.label}
             </a>
           ))}
-          <div className="px-2 pt-2 pb-1">
+          <div className="flex items-center gap-2 px-2 pt-2 pb-1">
             <MotionToggle />
+            <ThemeToggle />
           </div>
         </div>
       ) : null}

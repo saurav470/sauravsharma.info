@@ -109,9 +109,9 @@ export function AgentTrace() {
         <div className="w-[47px]" />
       </div>
 
-      <div className="grid lg:grid-cols-[1.05fr_1fr]">
+      <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
         {/* chat */}
-        <div className="flex min-h-[420px] flex-col gap-4 p-5 sm:p-7">
+        <div className="flex min-h-[420px] min-w-0 flex-col gap-4 p-5 sm:p-7">
           <div className="flex items-center gap-2 text-[13px] text-subtle">
             <span className="flex size-6 items-center justify-center rounded-full bg-[#e8cfae] text-[11px] font-semibold text-[#111]">
               Dr
@@ -158,7 +158,7 @@ export function AgentTrace() {
         </div>
 
         {/* trace */}
-        <div className="flex flex-col bg-[#141210] p-5 dark:border-l dark:border-line text-[#f4f4f5] sm:p-7">
+        <div className="flex min-w-0 flex-col bg-[#141210] p-5 dark:border-l dark:border-line text-[#f4f4f5] sm:p-7">
           <div className="flex items-center gap-2">
             <BrandIcon slug="langgraph" size={16} color="#fff" />
             <span className="text-[13px] font-semibold">LangGraph run</span>
