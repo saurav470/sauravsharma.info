@@ -49,16 +49,16 @@ export default function Home() {
         <Container>
           <a
             href="#faq"
-            className="inline-flex h-[34px] items-center gap-2.5 rounded-full border border-line bg-white pr-1.5 pl-3.5 text-[13px] text-ink-2"
+            className="inline-flex h-[34px] items-center gap-2.5 rounded-full border border-line bg-white pr-1.5 pl-3.5 text-[13px] whitespace-nowrap text-ink-2 max-[400px]:pr-3.5"
           >
             <PulseDot color="#63d94e" size={6} />
             Open to SDE roles · {SITE.notice}
-            <span className="inline-flex h-6 items-center gap-1 rounded-full bg-surface-2 px-2.5 text-[12px] font-medium text-ink">
+            <span className="inline-flex h-6 items-center gap-1 rounded-full bg-surface-2 px-2.5 text-[12px] font-medium text-ink max-[400px]:hidden">
               Details <ArrowRight size={12} />
             </span>
           </a>
 
-          <h1 className="mx-auto mt-7 max-w-[1100px] text-[clamp(44px,6.8vw,96px)] leading-[1.06] font-semibold tracking-[-0.045em] text-balance text-ink">
+          <h1 className="@container mx-auto mt-7 max-w-[1100px] text-[clamp(44px,6.8vw,96px)] leading-[1.06] font-semibold tracking-[-0.045em] text-balance text-ink">
             I build
             <br />
             <RotatingWord items={ROLE_WORDS} />

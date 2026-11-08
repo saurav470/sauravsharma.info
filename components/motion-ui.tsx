@@ -99,6 +99,8 @@ export function RotatingWord({ items, interval = 2200 }: Readonly<{ items: RoleW
             aria-hidden="true"
             className="inline-flex items-center gap-[0.18em] whitespace-nowrap [grid-area:1/1]"
             style={{
+              // Shrink only when this word would be wider than the headline (narrow phones).
+              fontSize: `min(1em, calc(100cqi / ${w.fit}))`,
               opacity: state === "active" ? 1 : 0,
               transform,
               filter: state === "active" ? "blur(0)" : "blur(6px)",

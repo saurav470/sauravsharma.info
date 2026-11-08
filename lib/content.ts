@@ -31,14 +31,16 @@ export interface RoleWord {
   bg: string;
   fg: string;
   rotate: number;
+  /** Width of tile + label in em (measured in Geist 600). Used to shrink long words on narrow phones. */
+  fit: number;
 }
 
 export const ROLE_WORDS: RoleWord[] = [
-  { label: "distributed systems", icon: "apachekafka", bg: "#111111", fg: "#fff", rotate: -6 },
-  { label: "AI agents", icon: "langchain", bg: "#8B7BFF", fg: "#fff", rotate: 5 },
-  { label: "real-time apps", icon: "socketdotio", bg: "#63d94e", fg: "#111", rotate: -4 },
-  { label: "Go services", icon: "go", bg: "#00ADD8", fg: "#fff", rotate: 6 },
-  { label: "Next.js frontends", icon: "nextdotjs", bg: "#F5C542", fg: "#111", rotate: -5 },
+  { label: "distributed systems", icon: "apachekafka", bg: "#111111", fg: "#fff", rotate: -6, fit: 10.1 },
+  { label: "AI agents", icon: "langchain", bg: "#8B7BFF", fg: "#fff", rotate: 5, fit: 5.5 },
+  { label: "real-time apps", icon: "socketdotio", bg: "#63d94e", fg: "#111", rotate: -4, fit: 7.8 },
+  { label: "Go services", icon: "go", bg: "#00ADD8", fg: "#fff", rotate: 6, fit: 6.5 },
+  { label: "Next.js frontends", icon: "nextdotjs", bg: "#F5C542", fg: "#111", rotate: -5, fit: 9 },
 ];
 
 export interface Job {
