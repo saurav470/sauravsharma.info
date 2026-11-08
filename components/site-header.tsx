@@ -4,15 +4,17 @@ import { useEffect, useState } from "react";
 import { Download, Menu, X } from "lucide-react";
 import { NAV, SITE } from "@/lib/content";
 import { MotionToggle } from "./motion-ui";
+import { ThemeToggle } from "./theme-toggle";
 
-export function Logo({ size = 24 }: Readonly<{ size?: number }>) {
+/** Brand mark. Inverts with the theme unless `fixed` (e.g. inside an always-dark hub). */
+export function Logo({ size = 24, fixed = false }: Readonly<{ size?: number; fixed?: boolean }>) {
   return (
     <svg viewBox="0 0 64 64" width={size} height={size} aria-hidden="true" className="shrink-0">
-      <rect width="64" height="64" rx="16" fill="#111" />
+      <rect width="64" height="64" rx="16" className={fixed ? "fill-[#111]" : "fill-ink"} />
       <path
         d="M41.5 21.5c-2-3-5.4-4.5-9.6-4.5-5.6 0-9.4 3-9.4 7.4 0 9.6 19.3 5.6 19.3 15.4 0 4.8-4.2 8.2-10.2 8.2-4.6 0-8.4-1.9-10.6-5.4"
         fill="none"
-        stroke="#fff"
+        className={fixed ? "stroke-[#fff]" : "stroke-white"}
         strokeWidth="5.5"
         strokeLinecap="round"
       />
@@ -60,6 +62,7 @@ export function SiteHeader() {
           <div className="hidden xl:block">
             <MotionToggle />
           </div>
+          <ThemeToggle />
           <a
             href={SITE.resume}
             download=""
@@ -89,7 +92,7 @@ export function SiteHeader() {
         </div>
       </nav>
       {open ? (
-        <div className="absolute inset-x-3 top-[64px] rounded-[20px] bg-white p-2 shadow-[0_0_0_1px_#ececec,0_24px_48px_-24px_rgba(0,0,0,.3)] lg:hidden">
+        <div className="absolute inset-x-3 top-[64px] rounded-[20px] bg-white p-2 shadow-[0_0_0_1px_var(--color-line),0_24px_48px_-24px_rgba(0,0,0,.3)] lg:hidden">
           {NAV.map((l) => (
             <a
               key={l.href}

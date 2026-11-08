@@ -172,7 +172,7 @@ export function HubDiagram({
       <>
         {n.icon ? (
           <span
-            className="flex size-[38px] shrink-0 items-center justify-center rounded-[11px] text-white"
+            className="flex size-[38px] shrink-0 items-center justify-center rounded-[11px] text-[#fff]"
             style={{ background: n.color }}
           >
             {n.icon}
@@ -233,7 +233,7 @@ export function HubDiagram({
             }}
             d={p.d}
             fill="none"
-            stroke="#d9d9d9"
+            className="stroke-line-strong"
             strokeWidth="1.5"
           />
         ))}
@@ -252,7 +252,7 @@ export function HubDiagram({
             className="absolute inset-0 rounded-[30px] border-[1.5px] border-live"
             style={{ animation: "ssHubRing 2s linear -1s infinite" }}
           />
-          <div className="absolute inset-0 flex items-center justify-center rounded-[30px] bg-ink shadow-[0_24px_40px_-18px_rgba(0,0,0,0.5)]">
+          <div className="absolute inset-0 flex items-center justify-center rounded-[30px] bg-[#111] shadow-[0_24px_40px_-18px_rgba(0,0,0,0.5)] dark:shadow-[0_0_0_1px_#ffffff26,0_24px_40px_-18px_rgba(0,0,0,0.8)]">
             {hub}
           </div>
         </div>

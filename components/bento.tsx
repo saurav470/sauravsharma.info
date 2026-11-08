@@ -40,7 +40,7 @@ function Title({ children, dark }: Readonly<{ children: ReactNode; dark?: boolea
 }
 
 function Body({ children, dark }: Readonly<{ children: ReactNode; dark?: boolean }>) {
-  return <p className={`mt-2 text-[15px] leading-[1.5] ${dark ? "text-[#a8a8a8]" : "text-muted"}`}>{children}</p>;
+  return <p className={`mt-2 text-[15px] leading-[1.5] ${dark ? "text-[#a8a8a8] dark:text-[#52525b]" : "text-muted"}`}>{children}</p>;
 }
 
 const FLOAT_TILES = [
@@ -123,11 +123,11 @@ export function Bento() {
           {AVATARS.map((c, i) => (
             <span
               key={c}
-              className="-ml-2.5 size-9 rounded-full shadow-[0_0_0_2px_#f4f4f4] first:ml-0"
+              className="-ml-2.5 size-9 rounded-full shadow-[0_0_0_2px_var(--color-surface-2)] first:ml-0"
               style={{ background: c, animation: `ssJoin 5s ease-in-out ${i}s infinite` }}
             />
           ))}
-          <span className="relative -ml-2.5 flex size-9 items-center justify-center rounded-full bg-white text-[11px] font-semibold text-ink shadow-[0_0_0_2px_#f4f4f4]">
+          <span className="relative -ml-2.5 flex size-9 items-center justify-center rounded-full bg-white text-[11px] font-semibold text-ink shadow-[0_0_0_2px_var(--color-surface-2)]">
             +9K
           </span>
         </div>
@@ -140,11 +140,11 @@ export function Bento() {
         <div className="mt-auto flex flex-col gap-2.5 pt-6 font-mono text-[11px] text-subtle">
           <div>
             before · 120ms
-            <div className="mt-1 h-[6px] rounded-full bg-[#dedede]" />
+            <div className="mt-1 h-[6px] rounded-full bg-line-strong" />
           </div>
           <div>
             after · 42ms
-            <div className="mt-1 h-[6px] w-[35%] overflow-hidden rounded-full bg-[#e4e4e4]">
+            <div className="mt-1 h-[6px] w-[35%] overflow-hidden rounded-full bg-line">
               <div
                 className="h-full origin-left rounded-full bg-ink"
                 style={{ animation: "ssFill 3.6s ease-in-out infinite" }}
@@ -200,7 +200,7 @@ export function Bento() {
           {Array.from({ length: 6 }, (_, p) => (
             <div key={p} className="font-mono text-[10.5px] text-subtle">
               p{p}
-              <div className="mt-1 h-[5px] overflow-hidden rounded-full bg-[#e4e4e4]">
+              <div className="mt-1 h-[5px] overflow-hidden rounded-full bg-line">
                 <div
                   className="h-full origin-left rounded-full bg-ink"
                   style={{ animation: `ssFill ${2.4 + (p % 3) * 0.5}s ease-in-out ${-p * 0.4}s infinite` }}

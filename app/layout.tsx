@@ -4,6 +4,7 @@ import { SITE } from "@/lib/content";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/sections";
 import { BrandSprite } from "@/components/brand-sprite";
+import { THEME_BOOTSTRAP } from "@/lib/theme";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -44,7 +45,8 @@ export const metadata: Metadata = {
   formatDetection: { telephone: false },
 };
 
-export const viewport: Viewport = { themeColor: "#ffffff", colorScheme: "light" };
+// Light by default for everyone; dark is opt-in via the header toggle.
+export const viewport: Viewport = { colorScheme: "light", themeColor: "#ffffff" };
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -72,6 +74,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP }} />
         <script dangerouslySetInnerHTML={{ __html: motionBootstrap }} />
         <script
           type="application/ld+json"

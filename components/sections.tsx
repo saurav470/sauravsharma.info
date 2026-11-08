@@ -86,10 +86,10 @@ export function ExperienceTimeline() {
         <li key={job.company} className="flex gap-7 pb-20 last:pb-0">
           <div className="relative w-[14px] shrink-0">
             <span
-              className={`absolute top-[14px] left-1.5 w-px bg-[#e8e8e8] ${i === EXPERIENCE.length - 1 ? "h-0" : "-bottom-20"}`}
+              className={`absolute top-[14px] left-1.5 w-px bg-line ${i === EXPERIENCE.length - 1 ? "h-0" : "-bottom-20"}`}
             />
             {job.latest ? (
-              <span className="absolute top-[9px] left-0 size-[13px] rounded-full bg-live shadow-[0_0_0_5px_#fde4e6]" />
+              <span className="absolute top-[9px] left-0 size-[13px] rounded-full bg-live shadow-[0_0_0_5px_#fde4e6] dark:shadow-[0_0_0_5px_#f4525f33]" />
             ) : (
               <span className="absolute top-[11px] left-[2px] size-[9px] rounded-full border border-ink bg-white" />
             )}
@@ -146,7 +146,7 @@ export function FaqList() {
         <details
           key={f.q}
           name="faq"
-          className="group rounded-[20px] bg-surface-2 transition-[background,box-shadow] duration-300 open:bg-white open:shadow-[0_0_0_1px_#ececec,0_18px_40px_-24px_rgba(0,0,0,.25)]"
+          className="group rounded-[20px] bg-surface-2 transition-[background,box-shadow] duration-300 open:bg-white open:shadow-[0_0_0_1px_var(--color-line),0_18px_40px_-24px_rgba(0,0,0,.25)]"
           open={i === 0}
         >
           <summary className="flex cursor-pointer items-center gap-4 px-5 py-5 sm:px-6">
@@ -177,12 +177,12 @@ export function CtaBand() {
         <HubDiagram
           className="h-[300px]! max-sm:h-[260px]!"
           mode="out"
-          hub={<Logo size={58} />}
+          hub={<Logo size={58} fixed />}
           hubBadge={
             <div className="flex h-8 items-center gap-2 rounded-full bg-ink px-3 text-[12px] whitespace-nowrap text-white">
               <span className="size-[7px] rounded-full bg-ok" />
               <span className="font-semibold tracking-[0.06em]">OPEN TO WORK</span>
-              <LiveClock className="text-[#bbb]" />
+              <LiveClock className="text-white/70" />
             </div>
           }
           left={[
@@ -239,7 +239,7 @@ export function SiteFooter() {
   return (
     <footer className="pt-[120px] pb-10">
       <div className="mx-auto max-w-[1240px] px-6">
-        <div className="grid grid-cols-2 gap-x-8 gap-y-12 border-b border-[#eee] pb-14 lg:grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))]">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-12 border-b border-line-soft pb-14 lg:grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))]">
           <div className="col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2.5 text-[20px] font-semibold tracking-[-0.4px] text-ink">
               <Logo size={28} />
@@ -293,7 +293,7 @@ export function SiteFooter() {
         </div>
         <div
           aria-hidden="true"
-          className="mt-10 bg-[linear-gradient(180deg,#e9e9e9,#fff)] bg-clip-text text-center text-[clamp(48px,12.2vw,176px)] leading-[.8] font-bold tracking-[-0.06em] whitespace-nowrap text-transparent select-none"
+          className="mt-10 bg-[linear-gradient(180deg,var(--color-wordmark),var(--color-page))] bg-clip-text text-center text-[clamp(48px,12.2vw,176px)] leading-[.8] font-bold tracking-[-0.06em] whitespace-nowrap text-transparent select-none"
         >
           saurav sharma
         </div>

@@ -21,6 +21,10 @@ Everything written on the site lives in `lib/content.ts` (keep in sync with the 
 
 Hosting: Oracle Cloud ARM VM, nginx vhost `/etc/nginx/sites-available/sauravsharma.info` (HTTPS via certbot, www/http → https://sauravsharma.info, immutable caching for `/_next/static`, CSP + security headers).
 
+## Theme
+
+Light by default for every visitor (OS dark preference is ignored). The moon/sun button in the header switches to dark; the choice is saved in `localStorage["ss:theme"]` and restored before first paint (`lib/theme.ts`). Dark palette = same tokens overridden under `[data-theme="dark"]` in `app/globals.css`.
+
 ## Motion
 
 - `lib/motion.ts` — global pause store (localStorage), reduced-motion, in-view gating, rAF/interval hooks.

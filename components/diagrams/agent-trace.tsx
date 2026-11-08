@@ -94,16 +94,16 @@ export function AgentTrace() {
   return (
     <div
       ref={wrapRef}
-      className="overflow-hidden rounded-[24px] border border-[#e8e8e8] bg-white shadow-[0_30px_60px_-30px_rgba(0,0,0,.25)]"
+      className="overflow-hidden rounded-[24px] border border-line bg-white shadow-[0_30px_60px_-30px_rgba(0,0,0,.25)]"
     >
       {/* browser chrome */}
-      <div className="flex h-11 items-center gap-3 border-b border-[#eee] bg-[#fafafa] px-4">
+      <div className="flex h-11 items-center gap-3 border-b border-line-soft bg-surface-2 px-4">
         <div className="flex gap-[7px]">
           <span className="size-[11px] rounded-full bg-[#FF5F57]" />
           <span className="size-[11px] rounded-full bg-[#FEBC2E]" />
           <span className="size-[11px] rounded-full bg-[#28C840]" />
         </div>
-        <div className="mx-auto flex h-7 w-full max-w-[360px] items-center justify-center rounded-lg bg-[#f0f0f0] font-mono text-[12px] text-subtle">
+        <div className="mx-auto flex h-7 w-full max-w-[360px] items-center justify-center rounded-lg bg-chip font-mono text-[12px] text-subtle">
           doctor-portal / patient / chat
         </div>
         <div className="w-[47px]" />
@@ -113,7 +113,7 @@ export function AgentTrace() {
         {/* chat */}
         <div className="flex min-h-[420px] flex-col gap-4 p-5 sm:p-7">
           <div className="flex items-center gap-2 text-[13px] text-subtle">
-            <span className="flex size-6 items-center justify-center rounded-full bg-[#e8cfae] text-[11px] font-semibold text-ink">
+            <span className="flex size-6 items-center justify-center rounded-full bg-[#e8cfae] text-[11px] font-semibold text-[#111]">
               Dr
             </span>{" "}
             Dr. Mehra · consultation #4821
@@ -148,9 +148,9 @@ export function AgentTrace() {
                 </>
               ) : (
                 <span className="flex flex-col gap-2 py-1">
-                  <span className="h-2 w-[86%] rounded-full bg-[#e6e6e6]" />
-                  <span className="h-2 w-[64%] rounded-full bg-[#e6e6e6]" />
-                  <span className="h-2 w-[72%] rounded-full bg-[#e6e6e6]" />
+                  <span className="h-2 w-[86%] rounded-full bg-line" />
+                  <span className="h-2 w-[64%] rounded-full bg-line" />
+                  <span className="h-2 w-[72%] rounded-full bg-line" />
                 </span>
               )}
             </div>
@@ -158,7 +158,7 @@ export function AgentTrace() {
         </div>
 
         {/* trace */}
-        <div className="flex flex-col bg-[#141210] p-5 text-[#f4f4f5] sm:p-7">
+        <div className="flex flex-col bg-[#141210] p-5 dark:border-l dark:border-line text-[#f4f4f5] sm:p-7">
           <div className="flex items-center gap-2">
             <BrandIcon slug="langgraph" size={16} color="#fff" />
             <span className="text-[13px] font-semibold">LangGraph run</span>

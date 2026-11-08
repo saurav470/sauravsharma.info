@@ -49,7 +49,7 @@ export default function Home() {
         <Container>
           <a
             href="#faq"
-            className="inline-flex h-[34px] items-center gap-2.5 rounded-full border border-[#ececec] bg-white pr-1.5 pl-3.5 text-[13px] text-ink-2"
+            className="inline-flex h-[34px] items-center gap-2.5 rounded-full border border-line bg-white pr-1.5 pl-3.5 text-[13px] text-ink-2"
           >
             <PulseDot color="#63d94e" size={6} />
             Open to SDE roles · {SITE.notice}
@@ -63,7 +63,7 @@ export default function Home() {
             <br />
             <RotatingWord items={ROLE_WORDS} />
             <br />
-            <span className="bg-[linear-gradient(180deg,#111_0%,#111_25%,#c9c9c9_100%)] bg-clip-text pb-[.08em] text-transparent">
+            <span className="bg-[linear-gradient(180deg,#111_0%,#111_25%,#c9c9c9_100%)] bg-clip-text dark:bg-[linear-gradient(180deg,#f4f4f5_0%,#f4f4f5_25%,#55555c_100%)] pb-[.08em] text-transparent">
               that hold up in production.
             </span>
           </h1>
@@ -100,7 +100,7 @@ export default function Home() {
                   <div className="flex h-8 items-center gap-2 rounded-full bg-ink px-3 text-[12px] whitespace-nowrap text-white">
                     <span className="size-[7px] rounded-full bg-live" />
                     <span className="font-semibold tracking-[0.06em]">GATEWAY</span>
-                    <LiveClock className="text-[#bbb]" />
+                    <LiveClock className="text-white/70" />
                   </div>
                 }
                 left={[

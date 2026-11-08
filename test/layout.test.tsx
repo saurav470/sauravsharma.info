@@ -15,5 +15,7 @@ describe("root layout", () => {
     expect(isValidElement(el)).toBe(true);
     expect(el.type).toBe("html");
     expect(el.props.lang).toBe("en");
+    // Light by default; the bootstrap only restores a saved dark choice.
+    expect(mod.viewport.colorScheme).toBe("light");
   });
 });

@@ -79,18 +79,18 @@ export function initialRows(): Row[] {
 function StatusBadge({ status, ms }: Readonly<{ status: Status; ms: number }>) {
   if (status === "dup")
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-[#fff4d6] px-2 py-[3px] text-[11.5px] font-medium leading-none text-[#6b4a00]">
+      <span className="inline-flex items-center gap-1 rounded-full bg-[#fff4d6] dark:bg-[#f5c542]/15 dark:text-[#f5c542] px-2 py-[3px] text-[11.5px] font-medium leading-none text-[#6b4a00]">
         <CopyX size={12} /> <span className="max-sm:hidden">duplicate · skipped</span><span className="sm:hidden">dup</span>
       </span>
     );
   if (status === "retry")
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-[#eef0ff] px-2 py-[3px] text-[11.5px] font-medium leading-none text-[#2c3a8c]">
+      <span className="inline-flex items-center gap-1 rounded-full bg-[#eef0ff] dark:bg-[#8b7bff]/20 dark:text-[#b9afff] px-2 py-[3px] text-[11.5px] font-medium leading-none text-[#2c3a8c]">
         <RotateCw size={12} /> <span className="max-sm:hidden">retry 2/5 · ok</span><span className="sm:hidden">retry</span>
       </span>
     );
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-[#e7f8e3] px-2 py-[3px] text-[11.5px] font-medium leading-none text-[#1d5c12]">
+    <span className="inline-flex items-center gap-1 rounded-full bg-[#e7f8e3] dark:bg-[#63d94e]/15 dark:text-[#8fe57f] px-2 py-[3px] text-[11.5px] font-medium leading-none text-[#1d5c12]">
       <Check size={12} strokeWidth={2.6} /> {ms}ms
     </span>
   );
@@ -185,7 +185,7 @@ export function PipelineFlow() {
       >
         {geo.paths.map((d, i) => (
           <g key={SOURCES[i].name}>
-            <path d={d} fill="none" stroke="#dcdcdc" strokeWidth="1.5" />
+            <path d={d} fill="none" className="stroke-line-strong" strokeWidth="1.5" />
             <path
               ref={(el) => {
                 pathRefs.current[i] = el;
@@ -246,11 +246,11 @@ export function PipelineFlow() {
         </div>
 
         <div className="relative flex min-h-0 flex-1 flex-col justify-end gap-1.5 px-2.5 py-2.5">
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[60px] bg-[linear-gradient(#fff,rgba(255,255,255,0))]" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[60px] bg-[linear-gradient(var(--color-white),transparent)]" />
           {rows.map((r) => (
             <div
               key={r.key}
-              className={`row-in flex items-center gap-2.5 rounded-xl px-2 py-1.5 ${r.status === "dup" ? "bg-[#fffaeb]" : ""}`}
+              className={`row-in flex items-center gap-2.5 rounded-xl px-2 py-1.5 ${r.status === "dup" ? "bg-[#fffaeb] dark:bg-[#f5c542]/10" : ""}`}
             >
               <span
                 className="flex size-[28px] shrink-0 items-center justify-center rounded-full"

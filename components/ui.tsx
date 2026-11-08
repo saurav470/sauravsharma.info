@@ -74,6 +74,16 @@ export function Lead({ children, className = "" }: Readonly<{ children: ReactNod
 
 /* ───────────── Brand icon + tiles ───────────── */
 
+/** True for colours too dark to read on a dark background (relative luminance < 0.06). */
+export function isVeryDark(hex: string): boolean {
+  const n = Number.parseInt(hex, 16);
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((c) => {
+    const v = c / 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.06;
+}
+
 export function BrandIcon({
   slug,
   size = 18,
@@ -87,12 +97,14 @@ export function BrandIcon({
 }>) {
   const brand = BRAND_META[slug];
   if (!brand) return null;
+  // Near-black brand marks (Next.js, GitHub, Kafka…) follow the text colour so they stay visible in dark mode.
+  const fill = color ?? (isVeryDark(brand.hex) ? "currentColor" : `#${brand.hex}`);
   return (
     <svg
       viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill={color ?? `#${brand.hex}`}
+      fill={fill}
       className={`shrink-0 ${className}`}
       role="img"
       aria-label={brand.title}
@@ -158,7 +170,7 @@ type ButtonSize = "xl" | "md" | "sm";
 const BTN_VARIANT: Record<ButtonVariant, string> = {
   primary: "bg-ink text-white hover:bg-ink-2",
   chip: "bg-chip text-ink hover:bg-line-soft",
-  outline: "bg-white text-ink shadow-[0_0_0_1px_#e6e6e6] hover:bg-surface-2",
+  outline: "bg-white text-ink shadow-[0_0_0_1px_var(--color-line-strong)] hover:bg-surface-2",
 };
 const BTN_SIZE: Record<ButtonSize, string> = {
   xl: "h-[52px] px-[26px] text-[16px] gap-[9px]",
@@ -209,7 +221,7 @@ export function Chip({ children, icon }: Readonly<{ children: ReactNode; icon?: 
 
 export function Tag({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <span className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-[12px] font-medium text-ink-2 shadow-[inset_0_0_0_1px_#e6e6e6]">
+    <span className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-[12px] font-medium text-ink-2 shadow-[inset_0_0_0_1px_var(--color-line-strong)]">
       {children}
     </span>
   );
