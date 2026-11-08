@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import {
   ArrowRight,
   Bot,
@@ -92,6 +92,7 @@ export default function Home() {
         <Container>
           <Reveal>
             <Stage className="px-[clamp(10px,3vw,40px)] pt-8 pb-6">
+              <Suspense>
               <HubDiagram
                 mode="through"
                 hub={<Network size={44} color="#fff" strokeWidth={1.6} />}
@@ -113,6 +114,7 @@ export default function Home() {
                   { title: "Data", meta: "Postgres · Redis", slug: "postgresql", color: "#4169E1" },
                 ]}
               />
+              </Suspense>
               <p className="mt-4 text-center font-mono text-[12px] text-quiet">
                 simulated traffic · the shape of the platform I build and run at Devkraft
               </p>
@@ -137,7 +139,9 @@ export default function Home() {
             <Chip icon={<GitBranch size={16} />}>Dead-letter queues</Chip>
           </div>
           <Reveal className="mt-14">
-            <PipelineFlow />
+            <Suspense>
+              <PipelineFlow />
+            </Suspense>
           </Reveal>
           <FeatureRow
             items={[
@@ -161,7 +165,9 @@ export default function Home() {
             a consultation.
           </Lead>
           <Reveal className="mt-14 text-left">
-            <AgentTrace />
+            <Suspense>
+              <AgentTrace />
+            </Suspense>
           </Reveal>
           <FeatureRow
             items={[
@@ -200,7 +206,9 @@ export default function Home() {
             <Display className="mt-2.5" first="Measured in production," second="not in slides." />
           </div>
           <Reveal className="mt-14">
-            <Bento />
+            <Suspense>
+              <Bento />
+            </Suspense>
           </Reveal>
         </Container>
       </Section>
@@ -217,7 +225,9 @@ export default function Home() {
           </div>
         </Container>
         <div className="mx-auto mt-12 max-w-[1440px]">
-          <StackMarquee />
+          <Suspense>
+            <StackMarquee />
+          </Suspense>
         </div>
       </Section>
 
@@ -257,7 +267,9 @@ export default function Home() {
       <Section>
         <Container>
           <Reveal>
-            <CtaBand />
+            <Suspense>
+              <CtaBand />
+            </Suspense>
           </Reveal>
         </Container>
       </Section>

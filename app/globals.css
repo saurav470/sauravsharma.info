@@ -12,7 +12,7 @@
   --color-muted: #666666;
   --color-subtle: #6f6f6f;
   --color-faint: #8d8d8d;
-  --color-quiet: #999999;
+  --color-quiet: #737373;
   --color-line: #e5e5e5;
   --color-line-soft: #efefef;
   --color-line-strong: #d4d4d4;
@@ -82,7 +82,10 @@ body {
 .march { animation: ssMarch .8s linear infinite }
 .row-in { animation: ssRowIn .45s ease both }
 
-/* Global pause + off-screen gating */
+/* Global pause + off-screen gating + wait-for-load */
+html:not([data-motion-ready]) *,
+html:not([data-motion-ready]) *::before,
+html:not([data-motion-ready]) *::after,
 html[data-motion="paused"] *,
 html[data-motion="paused"] *::before,
 html[data-motion="paused"] *::after,
@@ -124,3 +127,9 @@ html[data-motion="paused"] *::after,
 /* <details> accordions */
 details > summary { list-style: none }
 details > summary::-webkit-details-marker { display: none }
+
+/* Skip layout/paint of below-the-fold sections until they approach the viewport. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1100px;
+}

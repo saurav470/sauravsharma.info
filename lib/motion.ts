@@ -35,6 +35,42 @@ export function usePaused(): boolean {
   return useSyncExternalStore(subscribePaused, readPaused, () => false);
 }
 
+/* ───────────── Motion-ready gate ─────────────
+ * Animations stay idle until the page has loaded and the main thread is free, so they never
+ * compete with hydration (keeps Total Blocking Time low). Also flips html[data-motion-ready]
+ * which un-pauses CSS keyframe loops.
+ */
+
+let motionReady = false;
+let readyScheduled = false;
+const readyListeners = new Set<() => void>();
+
+function scheduleReady(): void {
+  if (readyScheduled) return;
+  readyScheduled = true;
+  const fire = () => {
+    motionReady = true;
+    document.documentElement.dataset.motionReady = "";
+    readyListeners.forEach((l) => l());
+  };
+  const afterLoad = () => {
+    if ("requestIdleCallback" in window) window.requestIdleCallback(fire, { timeout: 2500 });
+    else setTimeout(fire, 600);
+  };
+  if (document.readyState === "complete") afterLoad();
+  else window.addEventListener("load", afterLoad, { once: true });
+}
+
+function subscribeReady(cb: () => void): () => void {
+  readyListeners.add(cb);
+  scheduleReady();
+  return () => readyListeners.delete(cb);
+}
+
+export function useMotionReady(): boolean {
+  return useSyncExternalStore(subscribeReady, () => motionReady, () => false);
+}
+
 /* ───────────── prefers-reduced-motion ───────────── */
 
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
@@ -72,7 +108,8 @@ export function useAnimate<T extends Element>(ref: RefObject<T | null>): boolean
   const inView = useInView(ref, "80px");
   const paused = usePaused();
   const reduced = useReducedMotion();
-  return inView && !paused && !reduced;
+  const ready = useMotionReady();
+  return ready && inView && !paused && !reduced;
 }
 
 /* ───────────── Loops ───────────── */

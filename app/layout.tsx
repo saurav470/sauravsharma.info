@@ -11,8 +11,12 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: `${SITE.name} — ${SITE.role}`,
+  title: `${SITE.name} — Software Engineer (Backend, Distributed Systems & GenAI)`,
   description: SITE.description,
+  applicationName: SITE.name,
+  creator: SITE.name,
+  category: "technology",
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   authors: [{ name: SITE.name, url: SITE.url }],
   keywords: [
     "Saurav Sharma",
@@ -37,7 +41,7 @@ export const metadata: Metadata = {
     siteName: SITE.name,
   },
   twitter: { card: "summary_large_image", title: `${SITE.name} — ${SITE.role}`, description: SITE.description },
-  icons: { icon: "/icon.svg" },
+  formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = { themeColor: "#ffffff", colorScheme: "light" };
@@ -51,7 +55,13 @@ const personJsonLd = {
   email: `mailto:${SITE.email}`,
   sameAs: [SITE.github, SITE.linkedin],
   address: { "@type": "PostalAddress", addressRegion: "Delhi", addressCountry: "IN" },
-  alumniOf: "Netaji Subhas University of Technology",
+  image: `${SITE.url}/opengraph-image`,
+  knowsAbout: [
+    "Python", "FastAPI", "Django", "Go", "Node.js", "NestJS", "TypeScript", "React", "Next.js",
+    "PostgreSQL", "Redis", "Apache Kafka", "Kubernetes", "Docker", "AWS", "Distributed systems",
+    "Microservices", "LangChain", "LangGraph", "Model Context Protocol", "Retrieval-augmented generation",
+  ],
+  alumniOf: { "@type": "CollegeOrUniversity", name: "Netaji Subhas University of Technology" },
   worksFor: { "@type": "Organization", name: "Devkraft" },
 };
 

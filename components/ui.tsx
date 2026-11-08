@@ -24,7 +24,7 @@ export function Container({
 
 export function Section({ id, className = "", children }: { id?: string; className?: string; children: ReactNode }) {
   return (
-    <section id={id} className={`pt-[120px] sm:pt-[168px] ${className}`}>
+    <section id={id} className={`cv-auto pt-[120px] sm:pt-[168px] ${className}`}>
       {children}
     </section>
   );
